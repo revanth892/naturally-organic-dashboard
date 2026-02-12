@@ -17,6 +17,7 @@ import {
   TableIcon,
   UserCircleIcon,
 } from "../icons/index";
+import { HelpCircle, MapPin } from "lucide-react";
 import SidebarWidget from "./SidebarWidget";
 
 type NavItem = {
@@ -77,7 +78,7 @@ const AppSidebar: React.FC = () => {
     }] : []),
     ...(user?.leadManagementAccess ? [{
       icon: <GridIcon />,
-      name: "Lead Management",
+      name: "App Users",
       path: "/lead-management",
     }] : []),
     ...(user?.couponAccess ? [{
@@ -89,6 +90,21 @@ const AppSidebar: React.FC = () => {
       icon: <PieChartIcon />,
       name: "Analytics",
       path: "/analytics",
+    }] : []),
+    ...(user?.storeAccess ? [{
+      icon: <GridIcon />,
+      name: "Store",
+      path: "/store",
+    }] : []),
+    ...(user?.faqAccess ? [{
+      icon: <HelpCircle className="w-5 h-5" />,
+      name: "FAQs",
+      path: "/faq",
+    }] : []),
+    ...(user?.postcodeAccess ? [{
+      icon: <MapPin className="w-5 h-5" />,
+      name: "Postcodes",
+      path: "/postcodes",
     }] : []),
     {
       icon: <CalenderIcon />,
@@ -321,29 +337,15 @@ const AppSidebar: React.FC = () => {
       >
         <Link href="/">
           {isExpanded || isHovered || isMobileOpen ? (
-            <>
-              <Image
-                className="dark:hidden"
-                src="/images/logo/logo.svg"
-                alt="Logo"
-                width={150}
-                height={40}
-              />
-              <Image
-                className="hidden dark:block"
-                src="/images/logo/logo-dark.svg"
-                alt="Logo"
-                width={150}
-                height={40}
-              />
-            </>
+            <div className="flex items-center gap-2 px-2">
+              <span className="text-xl font-bold tracking-tight text-[#f4c430] uppercase">
+                Naturally Organic
+              </span>
+            </div>
           ) : (
-            <Image
-              src="/images/logo/logo-icon.svg"
-              alt="Logo"
-              width={32}
-              height={32}
-            />
+            <div className="w-10 h-10 rounded-lg bg-[#f4c430] flex items-center justify-center text-white font-bold text-xl">
+              N
+            </div>
           )}
         </Link>
       </div>

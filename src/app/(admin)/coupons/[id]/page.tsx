@@ -72,7 +72,7 @@ export default function CouponDetailsPage() {
                             <div className="flex flex-col items-end">
                                 <span className="text-xs font-bold text-gray-400 uppercase tracking-widest mb-1">Benefit</span>
                                 <span className="text-3xl font-black text-brand-600">
-                                    {coupon.discountType === 'percentage' ? `${coupon.discountValue}%` : `₹${coupon.discountValue}`} OFF
+                                    {coupon.discountType === 'percentage' ? `${coupon.discountValue}%` : `£${coupon.discountValue}`} OFF
                                 </span>
                             </div>
                         </div>
@@ -90,29 +90,18 @@ export default function CouponDetailsPage() {
                                     </div>
                                 </div>
 
-                                <div className="flex items-start gap-4">
-                                    <div className="p-3 bg-blue-500/10 rounded-xl text-blue-500">
-                                        <User className="w-6 h-6" />
-                                    </div>
-                                    <div>
-                                        <h4 className="text-sm font-bold text-gray-800 dark:text-white/90 uppercase tracking-wider">Target Group</h4>
-                                        <div className="mt-2 flex gap-2">
-                                            <Badge variant="light" color="primary" className="capitalize">{coupon.userType}</Badge>
-                                        </div>
-                                        <p className="text-xs text-gray-500 mt-1">Eligible users for this coupon</p>
-                                    </div>
-                                </div>
+
                             </div>
 
                             <div className="space-y-6 text-sm">
                                 <div className="p-4 bg-gray-50 dark:bg-white/5 rounded-2xl space-y-3">
                                     <div className="flex justify-between items-center text-xs">
                                         <span className="text-gray-400">Min Order Value:</span>
-                                        <span className="font-bold">₹{coupon.minOrderValue}</span>
+                                        <span className="font-bold">£{coupon.minOrderValue}</span>
                                     </div>
                                     <div className="flex justify-between items-center text-xs">
                                         <span className="text-gray-400">Max Discount:</span>
-                                        <span className="font-bold">{coupon.maxDiscountAmount ? `₹${coupon.maxDiscountAmount}` : 'No Limit'}</span>
+                                        <span className="font-bold">{coupon.maxDiscountAmount ? `£${coupon.maxDiscountAmount}` : 'No Limit'}</span>
                                     </div>
                                     <div className="flex justify-between items-center text-xs">
                                         <span className="text-gray-400">Total Usage Limit:</span>
@@ -176,7 +165,7 @@ export default function CouponDetailsPage() {
                         <Tag className="w-8 h-8 mx-auto mb-4 opacity-50" />
                         <h4 className="font-bold mb-2">Internal Notes</h4>
                         <p className="text-xs text-brand-100 leading-relaxed">
-                            This coupon is visible across the platform for {coupon.userType === 'all' ? 'everyone' : coupon.userType + 's'}.
+                            This coupon is visible across the platform for everyone.
                             Ensure minimum order values are met for correct application.
                         </p>
                     </div>

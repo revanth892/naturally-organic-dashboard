@@ -54,7 +54,7 @@ export default function Ecommerce() {
 
         {!user?.analyticsAccess && !user?.financeAccess && !user?.userProfilesAccess && !user?.productAccess && !user?.orderManagementAccess && !user?.leadManagementAccess && !user?.couponAccess && (
           <div className="col-span-12 p-10 text-center bg-white rounded-2xl border border-gray-200 dark:bg-gray-900 dark:border-gray-800">
-            <h2 className="text-2xl font-semibold text-gray-800 dark:text-white/90">Welcome to CMS</h2>
+            <h2 className="text-2xl font-semibold text-gray-800 dark:text-white/90">Welcome to Naturally Organic Dashboard</h2>
             <p className="mt-2 text-gray-500 dark:text-gray-400">
               You currently have a restricted view. Please refer to the sidebar for accessible modules.
             </p>

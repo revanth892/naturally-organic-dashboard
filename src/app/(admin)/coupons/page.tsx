@@ -29,7 +29,6 @@ export default function CouponsPage() {
         discountValue: 0,
         minOrderValue: 0,
         maxDiscountAmount: 0,
-        userType: "all",
         usageLimit: 0,
         perUserLimit: 1,
         startDate: "",
@@ -105,7 +104,6 @@ export default function CouponsPage() {
             discountValue: 0,
             minOrderValue: 0,
             maxDiscountAmount: 0,
-            userType: "all",
             usageLimit: 0,
             perUserLimit: 1,
             startDate: "",
@@ -124,7 +122,6 @@ export default function CouponsPage() {
             discountValue: coupon.discountValue,
             minOrderValue: coupon.minOrderValue || 0,
             maxDiscountAmount: coupon.maxDiscountAmount || 0,
-            userType: coupon.userType || "all",
             usageLimit: coupon.usageLimit || 0,
             perUserLimit: coupon.perUserLimit || 1,
             startDate: coupon.startDate ? new Date(coupon.startDate).toISOString().split('T')[0] : "",
@@ -188,9 +185,9 @@ export default function CouponsPage() {
                                                 </td>
                                                 <td className="px-4 py-3 whitespace-nowrap">
                                                     <div className="text-sm font-medium">
-                                                        {coupon.discountType === 'percentage' ? `${coupon.discountValue}%` : `₹${coupon.discountValue}`} OFF
+                                                        {coupon.discountType === 'percentage' ? `${coupon.discountValue}%` : `£${coupon.discountValue}`} OFF
                                                     </div>
-                                                    <div className="text-[10px] text-gray-400">Min Order: ₹{coupon.minOrderValue}</div>
+                                                    <div className="text-[10px] text-gray-400">Min Order: £{coupon.minOrderValue}</div>
                                                 </td>
                                                 <td className="px-4 py-3 whitespace-nowrap">
                                                     <div className="text-xs text-gray-600 dark:text-gray-400">Used: {coupon.usedCount} / {coupon.usageLimit || '∞'}</div>
@@ -215,9 +212,6 @@ export default function CouponsPage() {
                                                     ) : (
                                                         <Badge variant="light" color="error" startIcon={<XCircleIcon className="w-3 h-3" />}>Inactive</Badge>
                                                     )}
-                                                    <div className="mt-2 flex gap-2">
-                                                        <Badge variant="light" color="primary" className="capitalize">{coupon.userType}</Badge>
-                                                    </div>
                                                 </td>
                                                 <td className="px-4 py-3 whitespace-nowrap text-right">
                                                     <div className="flex justify-end gap-2">
@@ -252,7 +246,7 @@ export default function CouponsPage() {
                                 initialView="dayGridMonth"
                                 events={coupons.map(c => ({
                                     id: c._id,
-                                    title: `${c.code} (${c.discountType === 'percentage' ? c.discountValue + '%' : '₹' + c.discountValue})`,
+                                    title: `${c.code} (${c.discountType === 'percentage' ? c.discountValue + '%' : '£' + c.discountValue})`,
                                     start: c.startDate || c.createdAt,
                                     end: c.endDate,
                                     backgroundColor: c.isActive ? '#3b82f6' : '#94a3b8',
@@ -288,18 +282,6 @@ export default function CouponsPage() {
                                 <Label>Coupon Code</Label>
                                 <Input placeholder="e.g. WELCOME20" value={form.code} onChange={(e) => setForm(prev => ({ ...prev, code: e.target.value.toUpperCase() }))} />
                             </div>
-                            <div>
-                                <Label>User Type</Label>
-                                <select
-                                    className="w-full bg-gray-50 dark:bg-gray-800 border dark:border-gray-700 rounded-lg p-2.5 text-sm"
-                                    value={form.userType}
-                                    onChange={(e) => setForm(prev => ({ ...prev, userType: e.target.value }))}
-                                >
-                                    <option value="all">All Users</option>
-                                    <option value="farmer">Farmers Only</option>
-                                    <option value="retailer">Retailers Only</option>
-                                </select>
-                            </div>
                             <div className="md:col-span-2">
                                 <Label>Description</Label>
                                 <Input placeholder="e.g. 20% off for first order" value={form.description} onChange={(e) => setForm(prev => ({ ...prev, description: e.target.value }))} />
@@ -312,7 +294,7 @@ export default function CouponsPage() {
                                     onChange={(e) => setForm(prev => ({ ...prev, discountType: e.target.value as any }))}
                                 >
                                     <option value="percentage">Percentage (%)</option>
-                                    <option value="fixed">Fixed Amount (₹)</option>
+                                    <option value="fixed">Fixed Amount (£)</option>
                                 </select>
                             </div>
                             <div>
@@ -320,11 +302,11 @@ export default function CouponsPage() {
                                 <Input type="number" value={form.discountValue} onChange={(e) => setForm(prev => ({ ...prev, discountValue: Number(e.target.value) }))} />
                             </div>
                             <div>
-                                <Label>Min Order Value (₹)</Label>
+                                <Label>Min Order Value (£)</Label>
                                 <Input type="number" value={form.minOrderValue} onChange={(e) => setForm(prev => ({ ...prev, minOrderValue: Number(e.target.value) }))} />
                             </div>
                             <div>
-                                <Label>Max Discount (₹) {form.discountType === 'fixed' && <span className="text-[10px] text-gray-400">(N/A for fixed)</span>}</Label>
+                                <Label>Max Discount (£) {form.discountType === 'fixed' && <span className="text-[10px] text-gray-400">(N/A for fixed)</span>}</Label>
                                 <Input type="number" value={form.maxDiscountAmount} onChange={(e) => setForm(prev => ({ ...prev, maxDiscountAmount: Number(e.target.value) }))} disabled={form.discountType === 'fixed'} />
                             </div>
                             <div>

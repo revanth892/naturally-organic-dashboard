@@ -119,6 +119,10 @@ export default function UserManagementPage() {
             orderManagementAccess: !!user.orderManagementAccess,
             leadManagementAccess: !!user.leadManagementAccess,
             couponAccess: !!user.couponAccess,
+            brandAccess: !!user.brandAccess,
+            storeAccess: !!user.storeAccess,
+            faqAccess: !!user.faqAccess,
+            postcodeAccess: !!user.postcodeAccess,
         });
         setIsPermissionModalOpen(true);
     };
@@ -138,6 +142,10 @@ export default function UserManagementPage() {
         { key: "orderManagementAccess", label: "Order Management" },
         { key: "leadManagementAccess", label: "Lead Management" },
         { key: "couponAccess", label: "Coupons" },
+        { key: "brandAccess", label: "Brand" },
+        { key: "storeAccess", label: "Store" },
+        { key: "faqAccess", label: "FAQ Management" },
+        { key: "postcodeAccess", label: "Postcode Management" },
     ];
 
     return (

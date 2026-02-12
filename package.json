@@ -1,5 +1,5 @@
 {
-  "name": "free-nextjs-admin-dashboard",
+  "name": "naturally_organic_dashboard",
   "version": "2.2.2",
   "private": true,
   "scripts": {
@@ -19,8 +19,11 @@
     "@react-jvectormap/world": "^1.1.2",
     "@tailwindcss/forms": "^0.5.10",
     "@tailwindcss/postcss": "^4.1.17",
+    "@tailwindcss/typography": "^0.5.19",
     "apexcharts": "^4.7.0",
     "autoprefixer": "^10.4.22",
+    "blurhash": "^2.0.5",
+    "browser-image-compression": "^2.0.2",
     "flatpickr": "^4.6.13",
     "lucide-react": "^0.563.0",
     "next": "16.0.10",
@@ -30,6 +33,7 @@
     "react-dnd-html5-backend": "^16.0.1",
     "react-dom": "^19.2.0",
     "react-dropzone": "^14.3.8",
+    "react-markdown": "^10.1.0",
     "swiper": "^11.2.10",
     "tailwind-merge": "^2.6.0"
   },
