@@ -1,24 +1,22 @@
 "use client";
 import React, { useEffect, useRef, useState, useCallback } from "react";
 import Link from "next/link";
-import Image from "next/image";
 import { usePathname } from "next/navigation";
 import { useSidebar } from "../context/SidebarContext";
 import {
-  BoxCubeIcon,
-  CalenderIcon,
-  ChevronDownIcon,
-  GridIcon,
-  HorizontaLDots,
-  ListIcon,
-  PageIcon,
-  PieChartIcon,
-  PlugInIcon,
-  TableIcon,
-  UserCircleIcon,
-} from "../icons/index";
-import { HelpCircle, MapPin } from "lucide-react";
-import SidebarWidget from "./SidebarWidget";
+  LayoutDashboard,
+  Package,
+  CircleDollarSign,
+  ClipboardList,
+  Users,
+  TicketPercent,
+  TrendingUp,
+  Store,
+  HelpCircle,
+  MapPin,
+  ChevronDown
+} from "lucide-react";
+import { HorizontaLDots } from "../icons/index";
 
 type NavItem = {
   name: string;
@@ -30,111 +28,60 @@ type NavItem = {
 const AppSidebar: React.FC = () => {
   const { isExpanded, isMobileOpen, isHovered, setIsHovered } = useSidebar();
   const pathname = usePathname();
-  const [user, setUser] = useState<any>(null);
-
-  useEffect(() => {
-    const storedUser = localStorage.getItem("user");
-    if (storedUser) {
-      const parsedUser = JSON.parse(storedUser);
-      console.log("Sidebar User Permissions:", {
-        name: parsedUser.name,
-        couponAccess: parsedUser.couponAccess,
-        allPermissions: Object.keys(parsedUser).filter(k => k.endsWith('Access'))
-      });
-      setUser(parsedUser);
-    }
-  }, []);
 
   const navItems: NavItem[] = React.useMemo(() => [
     {
-      icon: <GridIcon />,
+      icon: <LayoutDashboard className="w-5 h-5" />,
       name: "Dashboard",
-      subItems: [{ name: "Overview", path: "/", pro: false }],
+      subItems: [{ name: "Overview", path: "/dashboard", pro: false }],
     },
-    ...(user?.userProfilesAccess ? [{
-      icon: <UserCircleIcon />,
-      name: "User Profiles",
-      path: "/user-profiles",
-    }] : []),
-    ...(user?.productAccess ? [{
-      icon: <BoxCubeIcon />,
+    {
+      icon: <Package className="w-5 h-5" />,
       name: "Products",
       path: "/products",
-    }] : []),
-    ...(user?.financeAccess ? [{
-      icon: <TableIcon />,
+    },
+    {
+      icon: <CircleDollarSign className="w-5 h-5" />,
       name: "Finance",
       path: "/finance",
-    }] : []),
-    ...(user?.userManagementAccess ? [{
-      icon: <ListIcon />,
-      name: "User Management",
-      path: "/user-management",
-    }] : []),
-    ...(user?.orderManagementAccess ? [{
-      icon: <TableIcon />,
+    },
+    {
+      icon: <ClipboardList className="w-5 h-5" />,
       name: "Order Management",
       path: "/order-management",
-    }] : []),
-    ...(user?.leadManagementAccess ? [{
-      icon: <GridIcon />,
+    },
+    {
+      icon: <Users className="w-5 h-5" />,
       name: "App Users",
       path: "/lead-management",
-    }] : []),
-    ...(user?.couponAccess ? [{
-      icon: <PlugInIcon />,
+    },
+    {
+      icon: <TicketPercent className="w-5 h-5" />,
       name: "Coupons",
       path: "/coupons",
-    }] : []),
-    ...(user?.analyticsAccess ? [{
-      icon: <PieChartIcon />,
+    },
+    {
+      icon: <TrendingUp className="w-5 h-5" />,
       name: "Analytics",
       path: "/analytics",
-    }] : []),
-    ...(user?.storeAccess ? [{
-      icon: <GridIcon />,
+    },
+    {
+      icon: <Store className="w-5 h-5" />,
       name: "Store",
       path: "/store",
-    }] : []),
-    ...(user?.faqAccess ? [{
+    },
+    {
       icon: <HelpCircle className="w-5 h-5" />,
       name: "FAQs",
       path: "/faq",
-    }] : []),
-    ...(user?.postcodeAccess ? [{
+    },
+    {
       icon: <MapPin className="w-5 h-5" />,
       name: "Postcodes",
       path: "/postcodes",
-    }] : []),
-    {
-      icon: <CalenderIcon />,
-      name: "Calendar",
-      path: "/calendar",
     },
-  ], [user]);
+  ], []);
 
-  const othersItems: NavItem[] = [
-    {
-      icon: <PieChartIcon />,
-      name: "Charts",
-      subItems: [
-        { name: "Line Chart", path: "/line-chart", pro: false },
-        { name: "Bar Chart", path: "/bar-chart", pro: false },
-      ],
-    },
-    {
-      icon: <BoxCubeIcon />,
-      name: "UI Elements",
-      subItems: [
-        { name: "Alerts", path: "/alerts", pro: false },
-        { name: "Avatar", path: "/avatars", pro: false },
-        { name: "Badge", path: "/badge", pro: false },
-        { name: "Buttons", path: "/buttons", pro: false },
-        { name: "Images", path: "/images", pro: false },
-        { name: "Videos", path: "/videos", pro: false },
-      ],
-    },
-  ];
 
   const renderMenuItems = (
     navItems: NavItem[],
@@ -166,7 +113,7 @@ const AppSidebar: React.FC = () => {
                 <span className={`menu-item-text`}>{nav.name}</span>
               )}
               {(isExpanded || isHovered || isMobileOpen) && (
-                <ChevronDownIcon
+                <ChevronDown
                   className={`ml-auto w-5 h-5 transition-transform duration-200  ${openSubmenu?.type === menuType &&
                     openSubmenu?.index === index
                     ? "rotate-180 text-brand-500"
@@ -268,8 +215,8 @@ const AppSidebar: React.FC = () => {
   useEffect(() => {
     // Check if the current path matches any submenu item
     let submenuMatched = false;
-    ["main", "others"].forEach((menuType) => {
-      const items = menuType === "main" ? navItems : othersItems;
+    ["main"].forEach((menuType) => {
+      const items = navItems;
       items.forEach((nav, index) => {
         if (nav.subItems) {
           nav.subItems.forEach((subItem) => {
@@ -335,7 +282,7 @@ const AppSidebar: React.FC = () => {
         className={`py-8 flex  ${!isExpanded && !isHovered ? "lg:justify-center" : "justify-start"
           }`}
       >
-        <Link href="/">
+        <Link href="/dashboard">
           {isExpanded || isHovered || isMobileOpen ? (
             <div className="flex items-center gap-2 px-2">
               <span className="text-xl font-bold tracking-tight text-[#379436] uppercase">
@@ -368,24 +315,8 @@ const AppSidebar: React.FC = () => {
               {renderMenuItems(navItems, "main")}
             </div>
 
-            <div className="">
-              <h2
-                className={`mb-4 text-xs uppercase flex leading-[20px] text-gray-400 ${!isExpanded && !isHovered
-                  ? "lg:justify-center"
-                  : "justify-start"
-                  }`}
-              >
-                {isExpanded || isHovered || isMobileOpen ? (
-                  "Others"
-                ) : (
-                  <HorizontaLDots />
-                )}
-              </h2>
-              {renderMenuItems(othersItems, "others")}
-            </div>
           </div>
         </nav>
-        {isExpanded || isHovered || isMobileOpen ? <SidebarWidget /> : null}
       </div>
     </aside>
   );

@@ -83,8 +83,12 @@ export default function LeadManagementPage() {
                                     <tr key={lead._id}>
                                         <td className="px-4 py-3 whitespace-nowrap">
                                             <div className="flex items-center">
-                                                <div className={`h-8 w-8 rounded-full flex items-center justify-center font-bold text-white text-xs shadow-theme-xs bg-brand-500`}>
-                                                    {lead.username?.charAt(0) || "?"}
+                                                <div className={`h-8 w-8 rounded-full flex items-center justify-center font-bold text-white text-[10px] shadow-theme-xs bg-brand-500 border border-white/20`}>
+                                                    {lead.username ? (
+                                                        lead.username.split(' ').map((n: string) => n[0]).join('').toUpperCase().slice(0, 2)
+                                                    ) : (
+                                                        "?"
+                                                    )}
                                                 </div>
                                                 <div className="ml-3">
                                                     <div className="text-theme-xs font-bold text-gray-800 dark:text-white/90">{lead.username}</div>

@@ -246,14 +246,10 @@ export default function LeadDetailsPage({ params }: { params: Promise<{ id: stri
                     <div className="flex flex-col md:flex-row items-center gap-8">
                         <div className="relative group/avatar">
                             <div className={`w-28 h-28 overflow-hidden flex items-center justify-center rounded-2xl text-white text-5xl font-black shadow-lg transition-all ${isEditing ? 'ring-4 ring-brand-500/20' : ''} bg-brand-500`}>
-                                {currentLeadData?.profileImages && currentLeadData.profileImages.length > 0 ? (
-                                    <img
-                                        src={currentLeadData.profileImages[currentLeadData.profileImages.length - 1].link}
-                                        className="w-full h-full object-cover"
-                                        alt="Profile"
-                                    />
+                                {currentLeadData?.username ? (
+                                    currentLeadData.username.split(' ').map((n: string) => n[0]).join('').toUpperCase().slice(0, 2)
                                 ) : (
-                                    currentLeadData?.username?.charAt(0) || "?"
+                                    "?"
                                 )}
 
                                 {isEditing && (

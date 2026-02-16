@@ -23,7 +23,6 @@ export default function ProductsPage() {
     const [error, setError] = useState("");
     const [activeTab, setActiveTab] = useState<"products" | "categories" | "subcategories" | "childCategories" | "brands">("products");
     const [searchQuery, setSearchQuery] = useState("");
-    const [pagination, setPagination] = useState({ page: 1, limit: 10, total: 0, totalPages: 1 });
     const [counts, setCounts] = useState({ products: 0, categories: 0, subcategories: 0, childCategories: 0, brands: 0 });
 
     // Modal State
@@ -86,10 +85,10 @@ export default function ProductsPage() {
         image: { key: "", location: "" }
     });
 
-    const fetchData = async (page = 1, search = "") => {
+    const fetchData = async (search = "") => {
         setIsLoading(true);
         try {
-            const params = `?page=${page}&limit=10&search=${encodeURIComponent(search)}`;
+            const params = search ? `?search=${encodeURIComponent(search)}` : "";
             let res;
             if (activeTab === "products") res = await productApi.getAllWithParams(params);
             else if (activeTab === "categories") res = await categoryApi.getAllWithParams(params);
@@ -104,19 +103,7 @@ export default function ProductsPage() {
                 else if (activeTab === "childCategories") setChildCategories(res.data);
                 else if (activeTab === "brands") setBrands(res.data);
 
-                if (res.pagination) {
-                    setPagination(res.pagination);
-                } else {
-                    // Fallback if API doesn't return pagination (e.g. initial load of all lists for dropdowns could be separate)
-                    // But here we are fetching main list.
-                    // The backend updates should return pagination.
-                    setPagination({ page: 1, limit: 10, total: res.count || res.data.length, totalPages: 1 });
-                    setCounts(prev => ({ ...prev, [activeTab]: res.count || res.data.length }));
-                }
-
-                if (res.pagination) {
-                    setCounts(prev => ({ ...prev, [activeTab]: res.pagination.total }));
-                }
+                setCounts(prev => ({ ...prev, [activeTab]: res.count || res.data.length }));
             }
         } catch (err: any) {
             setError(err.message || "Failed to fetch data");
@@ -170,15 +157,13 @@ export default function ProductsPage() {
     };
 
     useEffect(() => {
-        setPagination(prev => ({ ...prev, page: 1 }));
-        fetchData(1, searchQuery);
+        fetchData(searchQuery);
     }, [activeTab]); // Fetch when tab changes
 
     // Debounce search
     useEffect(() => {
         const delayDebounceFn = setTimeout(() => {
-            setPagination(prev => ({ ...prev, page: 1 }));
-            fetchData(1, searchQuery);
+            fetchData(searchQuery);
         }, 500);
         return () => clearTimeout(delayDebounceFn);
     }, [searchQuery]);
@@ -189,12 +174,6 @@ export default function ProductsPage() {
         fetchAllCounts();
     }, []);
 
-    const handlePageChange = (newPage: number) => {
-        if (newPage > 0 && newPage <= pagination.totalPages) {
-            setPagination(prev => ({ ...prev, page: newPage }));
-            fetchData(newPage, searchQuery);
-        }
-    };
 
     const handleSaveProduct = async () => {
         setIsSaving(true);
@@ -449,7 +428,7 @@ export default function ProductsPage() {
                                 : "text-gray-500 hover:text-gray-700 dark:text-gray-400 dark:hover:text-gray-200"
                                 }`}
                         >
-                            {tab.label} ({tab.count})
+                            {tab.label}
                         </button>
                     ))}
                 </div>
@@ -633,83 +612,6 @@ export default function ProductsPage() {
                     )}
                 </div>
 
-                {/* Pagination Controls */}
-                {!isLoading && pagination.totalPages > 1 && (
-                    <div className="flex items-center justify-between border-t border-gray-200 dark:border-gray-800 px-4 py-3 sm:px-6">
-                        <div className="flex flex-1 justify-between sm:hidden">
-                            <Button variant="outline" size="sm" onClick={() => handlePageChange(pagination.page - 1)} disabled={pagination.page <= 1}>Previous</Button>
-                            <Button variant="outline" size="sm" onClick={() => handlePageChange(pagination.page + 1)} disabled={pagination.page >= pagination.totalPages}>Next</Button>
-                        </div>
-                        <div className="hidden sm:flex sm:flex-1 sm:items-center sm:justify-between">
-                            <div>
-                                <p className="text-sm text-gray-700 dark:text-gray-300">
-                                    Showing <span className="font-medium">{(pagination.page - 1) * pagination.limit + 1}</span> to <span className="font-medium">{Math.min(pagination.page * pagination.limit, pagination.total)}</span> of <span className="font-medium">{pagination.total}</span> results
-                                </p>
-                            </div>
-                            <div>
-                                <nav className="isolate inline-flex -space-x-px rounded-md shadow-sm" aria-label="Pagination">
-                                    <button
-                                        onClick={() => handlePageChange(pagination.page - 1)}
-                                        disabled={pagination.page <= 1}
-                                        className="relative inline-flex items-center rounded-l-md px-2 py-2 text-gray-400 ring-1 ring-inset ring-gray-300 hover:bg-gray-50 focus:z-20 focus:outline-offset-0 disabled:opacity-50"
-                                    >
-                                        <span className="sr-only">Previous</span>
-                                        <ChevronLeft className="h-5 w-5" aria-hidden="true" />
-                                    </button>
-
-                                    {(() => {
-                                        const total = pagination.totalPages;
-                                        const current = pagination.page;
-                                        const pages = [];
-
-                                        if (total <= 7) {
-                                            for (let i = 1; i <= total; i++) pages.push(i);
-                                        } else {
-                                            if (current <= 4) {
-                                                for (let i = 1; i <= 5; i++) pages.push(i);
-                                                pages.push("...");
-                                                pages.push(total);
-                                            } else if (current >= total - 3) {
-                                                pages.push(1);
-                                                pages.push("...");
-                                                for (let i = total - 4; i <= total; i++) pages.push(i);
-                                            } else {
-                                                pages.push(1);
-                                                pages.push("...");
-                                                for (let i = current - 1; i <= current + 1; i++) pages.push(i);
-                                                pages.push("...");
-                                                pages.push(total);
-                                            }
-                                        }
-
-                                        return pages.map((p, i) => (
-                                            p === "..." ? (
-                                                <span key={`ellipsis-${i}`} className="relative inline-flex items-center px-4 py-2 text-sm font-semibold text-gray-700 ring-1 ring-inset ring-gray-300 focus:outline-offset-0">...</span>
-                                            ) : (
-                                                <button
-                                                    key={p}
-                                                    onClick={() => handlePageChange(p as number)}
-                                                    className={`relative inline-flex items-center px-4 py-2 text-sm font-semibold ${pagination.page === p ? "z-10 bg-brand-600 text-white focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-brand-600" : "text-gray-900 ring-1 ring-inset ring-gray-300 hover:bg-gray-50 focus:z-20 focus:outline-offset-0"}`}
-                                                >
-                                                    {p}
-                                                </button>
-                                            )
-                                        ));
-                                    })()}
-
-                                    <button
-                                        onClick={() => handlePageChange(pagination.page + 1)}
-                                        disabled={pagination.page >= pagination.totalPages}
-                                        className="relative inline-flex items-center rounded-r-md px-2 py-2 text-gray-400 ring-1 ring-inset ring-gray-300 hover:bg-gray-50 focus:z-20 focus:outline-offset-0 disabled:opacity-50"
-                                    >
-                                        <span className="sr-only">Next</span>
-                                        <ChevronRight className="h-5 w-5" aria-hidden="true" />
-                                    </button>
-                                </nav>
-                            </div>
-                        </div>
-                    </div>
-                )}
             </div>
 
             {/* Product Modal */}

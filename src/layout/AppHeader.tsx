@@ -83,7 +83,7 @@ const AppHeader: React.FC = () => {
             {/* Cross Icon */}
           </button>
 
-          <Link href="/" className="lg:hidden">
+          <Link href="/dashboard" className="lg:hidden">
             <span className="text-lg font-bold tracking-tight text-[#379436] uppercase">
               Naturally Organic
             </span>
