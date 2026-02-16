@@ -1,6 +1,8 @@
 "use client";
 import PermissionGuard from "@/components/common/PermissionGuard";
 import PageBreadcrumb from "@/components/common/PageBreadCrumb";
+import PageTutorial from "@/components/common/PageTutorial";
+
 import { useEffect, useState, useRef } from "react";
 import { brandApi, mediaApi } from "@/api/api";
 import { Modal } from "@/components/ui/modal";
@@ -11,6 +13,21 @@ import { PlusIcon, TrashIcon, EditIcon, Loader2, ImageIcon, CameraIcon } from "l
 import Badge from "@/components/ui/badge/Badge";
 
 export default function BrandsPage() {
+    const tutorialSteps = [
+        {
+            title: "Brand List",
+            description: "View all brands currently in the system. You can see how many products are linked to each brand."
+        },
+        {
+            title: "Logo Management",
+            description: "When adding or editing a brand, you can upload a logo which will be displayed on the storefront."
+        },
+        {
+            title: "Edit & Delete",
+            description: "Easily update brand details or remove brands that are no longer active using the action buttons."
+        }
+    ];
+
     const [brands, setBrands] = useState<any[]>([]);
     const [isLoading, setIsLoading] = useState(true);
     const [isSaving, setIsSaving] = useState(false);
@@ -160,7 +177,15 @@ export default function BrandsPage() {
     return (
         <PermissionGuard permission="brandAccess">
             <div className="mb-6 flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
-                <PageBreadcrumb pageTitle="Brands Management" />
+                <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4 mb-6">
+                    <PageBreadcrumb pageTitle="Brands Management" />
+                    <PageTutorial
+                        title="Brands"
+                        overview="The Brands section allows you to manage the different manufacturing partners and labels in your organic catalog."
+                        steps={tutorialSteps}
+                    />
+                </div>
+
                 <Button onClick={() => { resetForm(); setIsModalOpen(true); }} size="sm" startIcon={<PlusIcon className="w-4 h-4" />}>
                     Add Brand
                 </Button>

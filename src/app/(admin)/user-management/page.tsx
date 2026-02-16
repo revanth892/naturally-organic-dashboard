@@ -1,6 +1,8 @@
 "use client";
 import PermissionGuard from "@/components/common/PermissionGuard";
 import PageBreadcrumb from "@/components/common/PageBreadCrumb";
+import PageTutorial from "@/components/common/PageTutorial";
+
 import { useEffect, useState } from "react";
 import { userApi } from "@/api/api";
 import { Modal } from "@/components/ui/modal";
@@ -10,6 +12,21 @@ import Label from "@/components/form/Label";
 import Checkbox from "@/components/form/input/Checkbox";
 
 export default function UserManagementPage() {
+    const tutorialSteps = [
+        {
+            title: "Staff Management",
+            description: "View and manage all CMS administrators. You can create new staff accounts with custom credentials."
+        },
+        {
+            title: "Granular Permissions",
+            description: "Click 'Edit Permissions' on any user to control exactly which modules they can access."
+        },
+        {
+            title: "Security Controls",
+            description: "Easily reset passwords or toggle account status (Active/Inactive) for security purposes."
+        }
+    ];
+
     const [users, setUsers] = useState<any[]>([]);
     const [isLoading, setIsLoading] = useState(true);
     const [error, setError] = useState("");
@@ -151,7 +168,15 @@ export default function UserManagementPage() {
     return (
         <PermissionGuard permission="userManagementAccess">
             <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4 mb-6">
-                <PageBreadcrumb pageTitle="User Management" />
+                <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4 mb-6">
+                    <PageBreadcrumb pageTitle="CMS Administrators" />
+                    <PageTutorial
+                        title="User Management"
+                        overview="The User Management section is for controlling who has access to this CMS. You can manage internal staff, their roles, and their security settings."
+                        steps={tutorialSteps}
+                    />
+                </div>
+
                 <Button size="sm" onClick={() => { setPermissions({}); setIsCreateModalOpen(true); }}>
                     Create New User
                 </Button>

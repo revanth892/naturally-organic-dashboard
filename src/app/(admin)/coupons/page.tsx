@@ -1,6 +1,8 @@
 "use client";
 import PermissionGuard from "@/components/common/PermissionGuard";
 import PageBreadcrumb from "@/components/common/PageBreadCrumb";
+import PageTutorial from "@/components/common/PageTutorial";
+
 import { useEffect, useState } from "react";
 import { couponApi } from "@/api/api";
 import { Modal } from "@/components/ui/modal";
@@ -15,6 +17,21 @@ import dayGridPlugin from "@fullcalendar/daygrid";
 import interactionPlugin from "@fullcalendar/interaction";
 
 export default function CouponsPage() {
+    const tutorialSteps = [
+        {
+            title: "Coupon Setup",
+            description: "Create new discount codes by defining the code, the discount value (Flat or Percentage), and the expiry date."
+        },
+        {
+            title: "Active Tracking",
+            description: "Monitor which coupons are currently active. Coupons automatically expire once they reach their end date."
+        },
+        {
+            title: "Management",
+            description: "Edit existing coupons to extend their validity or delete them to immediately disable the discount."
+        }
+    ];
+
     const [coupons, setCoupons] = useState<any[]>([]);
     const [isLoading, setIsLoading] = useState(true);
     const [isSaving, setIsSaving] = useState(false);
@@ -135,7 +152,15 @@ export default function CouponsPage() {
         <PermissionGuard permission="couponAccess">
             <div>
                 <div className="mb-6 flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
-                    <PageBreadcrumb pageTitle="Coupon Management" />
+                    <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4 mb-6">
+                        <PageBreadcrumb pageTitle="Coupons & Discounts" />
+                        <PageTutorial
+                            title="Coupons"
+                            overview="The Coupons module is your tool for driving sales through promotions and targeted discounts."
+                            steps={tutorialSteps}
+                        />
+                    </div>
+
                     <Button onClick={() => { resetForm(); setIsModalOpen(true); }} size="sm" startIcon={<PlusIcon className="w-4 h-4" />}>
                         Create Coupon
                     </Button>

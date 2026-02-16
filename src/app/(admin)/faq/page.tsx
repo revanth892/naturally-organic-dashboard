@@ -1,6 +1,8 @@
 "use client";
 import PermissionGuard from "@/components/common/PermissionGuard";
 import PageBreadcrumb from "@/components/common/PageBreadCrumb";
+import PageTutorial from "@/components/common/PageTutorial";
+
 import { useEffect, useState } from "react";
 import { faqApi } from "@/api/api";
 import { Modal } from "@/components/ui/modal";
@@ -10,6 +12,21 @@ import Label from "@/components/form/Label";
 import { PlusIcon, TrashIcon, EditIcon, HelpCircle } from "lucide-react";
 
 export default function FAQPage() {
+    const tutorialSteps = [
+        {
+            title: "Question Management",
+            description: "Add frequently asked questions to help your users. Keep questions clear and concise."
+        },
+        {
+            title: "Rich Answers",
+            description: "Provide detailed answers. You can use multiple lines to make the information easy to read."
+        },
+        {
+            title: "Real-time Updates",
+            description: "Changes made here are instantly reflected on the storefront FAQ section."
+        }
+    ];
+
     const [faqs, setFaqs] = useState<any[]>([]);
     const [isLoading, setIsLoading] = useState(true);
     const [isSaving, setIsSaving] = useState(false);
@@ -89,7 +106,15 @@ export default function FAQPage() {
     return (
         <PermissionGuard permission="faqAccess">
             <div className="mb-6 flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
-                <PageBreadcrumb pageTitle="FAQ Management" />
+                <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4 mb-6">
+                    <PageBreadcrumb pageTitle="Support FAQs" />
+                    <PageTutorial
+                        title="FAQs"
+                        overview="The FAQ section helps reduce support burden by providing instant answers to common customer queries."
+                        steps={tutorialSteps}
+                    />
+                </div>
+
                 <Button onClick={() => { resetForm(); setIsModalOpen(true); }} size="sm" startIcon={<PlusIcon className="w-4 h-4" />}>Add FAQ</Button>
             </div>
 

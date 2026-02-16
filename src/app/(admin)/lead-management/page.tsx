@@ -1,6 +1,8 @@
 "use client";
 import PermissionGuard from "@/components/common/PermissionGuard";
 import PageBreadcrumb from "@/components/common/PageBreadCrumb";
+import PageTutorial from "@/components/common/PageTutorial";
+
 import { useEffect, useState } from "react";
 import { appUserApi } from "@/api/api";
 import {
@@ -11,6 +13,21 @@ import { Calendar } from "lucide-react";
 import Link from "next/link";
 
 export default function LeadManagementPage() {
+    const tutorialSteps = [
+        {
+            title: "Customer Overview",
+            description: "View the list of all registered users and leads. You can see their join dates and status at a glance."
+        },
+        {
+            title: "Lead Details",
+            description: "Click on any user row to view their full profile, including cart activities and tracking details."
+        },
+        {
+            title: "Search and Filter",
+            description: "Use the search bar and filter options to find specific users by name or criteria."
+        }
+    ];
+
     const [leads, setLeads] = useState<any[]>([]);
     const [filteredLeads, setFilteredLeads] = useState<any[]>([]);
     const [isLoading, setIsLoading] = useState(true);
@@ -50,7 +67,15 @@ export default function LeadManagementPage() {
     return (
         <PermissionGuard permission="leadManagementAccess">
             <div className="mb-6">
-                <PageBreadcrumb pageTitle="User Management" />
+                <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4 mb-6">
+                    <PageBreadcrumb pageTitle="App Users & Leads" />
+                    <PageTutorial
+                        title="App Users"
+                        overview="This section manages your customer base. Track registrations, monitor activities, and handle lead conversions."
+                        steps={tutorialSteps}
+                    />
+                </div>
+
             </div>
 
             <div className="rounded-2xl border border-gray-200 bg-white dark:border-gray-800 dark:bg-white/[0.03]">

@@ -1,6 +1,8 @@
 "use client";
 import PermissionGuard from "@/components/common/PermissionGuard";
 import PageBreadcrumb from "@/components/common/PageBreadCrumb";
+import PageTutorial from "@/components/common/PageTutorial";
+
 import { useEffect, useState } from "react";
 import { storeApi, mediaApi } from "@/api/api";
 import { Modal } from "@/components/ui/modal";
@@ -27,6 +29,25 @@ const DEFAULT_HOURS: DayHours[] = DAYS.map(day => ({
 }));
 
 export default function StorePage() {
+    const tutorialSteps = [
+        {
+            title: "Store Listings",
+            description: "View and manage all your physical or digital storefronts. You can see names, addresses, and phone numbers at a glance."
+        },
+        {
+            title: "Visual Presentation",
+            description: "Add multiple high-quality images for each store to showcase your locations to customers."
+        },
+        {
+            title: "Operational Hours",
+            description: "Set custom opening and closing times for each day of the week, or mark specific days as closed."
+        },
+        {
+            title: "Google Maps Integration",
+            description: "Add direct links to your Google Maps locations to help customers navigate to your stores easily."
+        }
+    ];
+
     const [stores, setStores] = useState<any[]>([]);
     const [isLoading, setIsLoading] = useState(true);
     const [isSaving, setIsSaving] = useState(false);
@@ -192,7 +213,15 @@ export default function StorePage() {
     return (
         <PermissionGuard permission="storeAccess">
             <div className="mb-6 flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
-                <PageBreadcrumb pageTitle="Store Management" />
+                <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4 mb-6">
+                    <PageBreadcrumb pageTitle="Store Locations" />
+                    <PageTutorial
+                        title="Store Management"
+                        overview="The Store Management section allows you to manage the physical footprint of your organic business, including location details, contact info, and operational hours."
+                        steps={tutorialSteps}
+                    />
+                </div>
+
                 <Button onClick={() => { resetForm(); setIsModalOpen(true); }} size="sm" startIcon={<PlusIcon className="w-4 h-4" />}>Add Store</Button>
             </div>
 

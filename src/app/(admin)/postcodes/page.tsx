@@ -1,6 +1,8 @@
 "use client";
 import PermissionGuard from "@/components/common/PermissionGuard";
 import PageBreadcrumb from "@/components/common/PageBreadCrumb";
+import PageTutorial from "@/components/common/PageTutorial";
+
 import { useEffect, useState } from "react";
 import { postcodeApi } from "@/api/api";
 import { Modal } from "@/components/ui/modal";
@@ -11,6 +13,21 @@ import Checkbox from "@/components/form/input/Checkbox";
 import { PlusIcon, TrashIcon, EditIcon, Truck, MapPin } from "lucide-react";
 
 export default function PostcodePage() {
+    const tutorialSteps = [
+        {
+            title: "Postcode Coverage",
+            description: "Add individual postcodes to the list to enable delivery for those specific geographic areas."
+        },
+        {
+            title: "Service Logic",
+            description: "For each postcode, you can enable/disable specifically: Free Same Day, Special Same Day, or Express delivery."
+        },
+        {
+            title: "Minimum Order Values",
+            description: "Set minimum spend requirements for each delivery type to ensure logistics costs are covered."
+        }
+    ];
+
     const defaultService = { isEligible: false, description: "", minimumValue: 0 };
     const [postcodes, setPostcodes] = useState<any[]>([]);
     const [isLoading, setIsLoading] = useState(true);
@@ -146,7 +163,15 @@ export default function PostcodePage() {
     return (
         <PermissionGuard permission="postcodeAccess">
             <div className="mb-6 flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
-                <PageBreadcrumb pageTitle="Postcode Management" />
+                <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4 mb-6">
+                    <PageBreadcrumb pageTitle="Delivery Coverage" />
+                    <PageTutorial
+                        title="Postcodes"
+                        overview="The Postcode module controls your delivery logistics. It determines where you ship and what service levels are available."
+                        steps={tutorialSteps}
+                    />
+                </div>
+
                 <Button onClick={() => { resetForm(); setIsModalOpen(true); }} size="sm" startIcon={<PlusIcon className="w-4 h-4" />}>Add Postcode</Button>
             </div>
 

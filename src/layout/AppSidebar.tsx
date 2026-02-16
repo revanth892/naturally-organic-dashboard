@@ -9,7 +9,10 @@ import {
   CircleDollarSign,
   ClipboardList,
   Users,
+  ShieldCheck,
+  UserCircle,
   TicketPercent,
+  Tag,
   TrendingUp,
   Store,
   HelpCircle,
@@ -56,9 +59,24 @@ const AppSidebar: React.FC = () => {
       path: "/lead-management",
     },
     {
+      icon: <ShieldCheck className="w-5 h-5" />,
+      name: "User Management",
+      path: "/user-management",
+    },
+    {
+      icon: <UserCircle className="w-5 h-5" />,
+      name: "User Profiles",
+      path: "/user-profiles",
+    },
+    {
       icon: <TicketPercent className="w-5 h-5" />,
       name: "Coupons",
       path: "/coupons",
+    },
+    {
+      icon: <Tag className="w-5 h-5" />,
+      name: "Brands",
+      path: "/brands",
     },
     {
       icon: <TrendingUp className="w-5 h-5" />,

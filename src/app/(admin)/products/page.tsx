@@ -1,6 +1,7 @@
 "use client";
 import PermissionGuard from "@/components/common/PermissionGuard";
 import PageBreadcrumb from "@/components/common/PageBreadCrumb";
+import PageTutorial from "@/components/common/PageTutorial";
 import { useEffect, useState, useRef } from "react";
 import { productApi, categoryApi, subcategoryApi, childCategoryApi, brandApi, mediaApi } from "@/api/api";
 import { Modal } from "@/components/ui/modal";
@@ -12,6 +13,25 @@ import Link from "next/link";
 import Badge from "@/components/ui/badge/Badge";
 
 export default function ProductsPage() {
+    const tutorialSteps = [
+        {
+            title: "Inventory Management",
+            description: "View, edit, and search through all products. You can toggle stock levels and change visibility here."
+        },
+        {
+            title: "Category Hierarchy",
+            description: "Use the tabs to switch between Categories, Sub-categories, and Child-categories to organize your catalog."
+        },
+        {
+            title: "Brand Management",
+            description: "Manage the manufacturing brands associated with your organic produce."
+        },
+        {
+            title: "Quick Actions",
+            description: "Add new products or categories using the 'Add' buttons located top right of each section."
+        }
+    ];
+
     const [products, setProducts] = useState<any[]>([]);
     const [categories, setCategories] = useState<any[]>([]);
     const [subcategories, setSubcategories] = useState<any[]>([]);
@@ -399,8 +419,16 @@ export default function ProductsPage() {
 
     return (
         <PermissionGuard permission="productAccess">
-            <div className="mb-6 flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
-                <PageBreadcrumb pageTitle="Inventory & Categories" />
+            <div className="flex flex-col lg:flex-row lg:items-center lg:justify-between gap-4 mb-6">
+                <div className="flex flex-col sm:flex-row sm:items-center gap-4">
+                    <PageBreadcrumb pageTitle="Inventory & Categories" />
+                    <PageTutorial
+                        title="Products"
+                        overview="The Products section is where you manage your entire storefront catalog, from individual items to the complex category hierarchy."
+                        steps={tutorialSteps}
+                    />
+                </div>
+
                 <div className="flex gap-2">
                     {activeTab === "products" && <Button onClick={() => { resetProductForm(); setIsProductModalOpen(true); }} size="sm" startIcon={<PlusIcon className="w-4 h-4" />}>Add Product</Button>}
                     {activeTab === "categories" && <Button onClick={() => { setEditingCategory(null); setIsCategoryModalOpen(true); }} size="sm" startIcon={<PlusIcon className="w-4 h-4" />}>Add Category</Button>}
