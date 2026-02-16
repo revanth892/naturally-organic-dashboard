@@ -15,7 +15,7 @@ const ReactApexChart = dynamic(() => import("react-apexcharts"), {
 export default function MonthlyTarget() {
   const series = [75.55];
   const options: ApexOptions = {
-    colors: ["#f4c430"],
+    colors: ["#379436"],
     chart: {
       fontFamily: "Outfit, sans-serif",
       type: "radialBar",
@@ -54,7 +54,7 @@ export default function MonthlyTarget() {
     },
     fill: {
       type: "solid",
-      colors: ["#f4c430"],
+      colors: ["#379436"],
     },
     stroke: {
       lineCap: "round",

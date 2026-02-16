@@ -84,7 +84,7 @@ const AppHeader: React.FC = () => {
           </button>
 
           <Link href="/" className="lg:hidden">
-            <span className="text-lg font-bold tracking-tight text-[#f4c430] uppercase">
+            <span className="text-lg font-bold tracking-tight text-[#379436] uppercase">
               Naturally Organic
             </span>
           </Link>

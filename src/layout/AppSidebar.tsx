@@ -338,12 +338,12 @@ const AppSidebar: React.FC = () => {
         <Link href="/">
           {isExpanded || isHovered || isMobileOpen ? (
             <div className="flex items-center gap-2 px-2">
-              <span className="text-xl font-bold tracking-tight text-[#f4c430] uppercase">
+              <span className="text-xl font-bold tracking-tight text-[#379436] uppercase">
                 Naturally Organic
               </span>
             </div>
           ) : (
-            <div className="w-10 h-10 rounded-lg bg-[#f4c430] flex items-center justify-center text-white font-bold text-xl">
+            <div className="w-10 h-10 rounded-lg bg-[#379436] flex items-center justify-center text-white font-bold text-xl">
               N
             </div>
           )}

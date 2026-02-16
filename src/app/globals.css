@@ -39,18 +39,18 @@
   --color-white: #ffffff;
   --color-black: #101828;
 
-  --color-brand-25: #fffaf0;
-  --color-brand-50: #fff5e1;
-  --color-brand-100: #ffebb9;
-  --color-brand-200: #ffe08d;
-  --color-brand-300: #ffd460;
-  --color-brand-400: #ffc933;
-  --color-brand-500: #f4c430;
-  --color-brand-600: #d4a31a;
-  --color-brand-700: #a67c0d;
-  --color-brand-800: #7d5b06;
-  --color-brand-900: #553e04;
-  --color-brand-950: #332402;
+  --color-brand-25: #f7fbf7;
+  --color-brand-50: #f2f9f2;
+  --color-brand-100: #e5f2e5;
+  --color-brand-200: #c9e6c9;
+  --color-brand-300: #add9ad;
+  --color-brand-400: #76bf76;
+  --color-brand-500: #379436;
+  --color-brand-600: #2d7a2d;
+  --color-brand-700: #235e23;
+  --color-brand-800: #1a451a;
+  --color-brand-900: #112d11;
+  --color-brand-950: #0a1b0a;
 
   --color-blue-light-25: #f5fbff;
   --color-blue-light-50: #f0f9ff;
@@ -92,18 +92,18 @@
   --color-orange-900: #7e2410;
   --color-orange-950: #511c10;
 
-  --color-success-25: #fffaf0;
-  --color-success-50: #fff5e1;
-  --color-success-100: #ffebb9;
-  --color-success-200: #ffe08d;
-  --color-success-300: #ffd460;
-  --color-success-400: #ffc933;
-  --color-success-500: #f4c430;
-  --color-success-600: #d4a31a;
-  --color-success-700: #a67c0d;
-  --color-success-800: #7d5b06;
-  --color-success-900: #553e04;
-  --color-success-950: #332402;
+  --color-success-25: #f7fbf7;
+  --color-success-50: #f2f9f2;
+  --color-success-100: #e5f2e5;
+  --color-success-200: #c9e6c9;
+  --color-success-300: #add9ad;
+  --color-success-400: #76bf76;
+  --color-success-500: #379436;
+  --color-success-600: #2d7a2d;
+  --color-success-700: #235e23;
+  --color-success-800: #1a451a;
+  --color-success-900: #112d11;
+  --color-success-950: #0a1b0a;
 
   --color-error-25: #fffbfa;
   --color-error-50: #fef3f2;
@@ -496,14 +496,14 @@ span.flatpickr-weekday,
 .flatpickr-day.selected.nextMonthDay,
 .flatpickr-day.startRange.nextMonthDay,
 .flatpickr-day.endRange.nextMonthDay {
-  background: #f4c430;
+  background: #379436;
   @apply border-brand-500 bg-brand-500 hover:border-brand-50 hover:bg-brand-500;
 }
 
 .flatpickr-day.selected.startRange+.endRange:not(:nth-child(7n + 1)),
 .flatpickr-day.startRange.startRange+.endRange:not(:nth-child(7n + 1)),
 .flatpickr-day.endRange.startRange+.endRange:not(:nth-child(7n + 1)) {
-  box-shadow: -10px 0 0 #f4c430;
+  box-shadow: -10px 0 0 #379436;
 }
 
 .flatpickr-months .flatpickr-prev-month svg,
